@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <style>
+        html {
+            background-color: pink;
+        }
+
+        .main-chat-window {
+            height: 350px;
+            overflow: auto;
+        }
+        p {
+            padding-top:20px;
+            padding-bottom:20px;
+        }
+        a {
+            padding-top:20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <section class="section">
+            <div class="container has-text-centered">
+                <h1 class="title">
+                    Global Chat
+                </h1>
+                <p class="subtitle">
+                    Because talking to total strangers is a <strong>good</strong> idea!
+                </p>
+            </div>
+        </section>
+
+        <section class="section container" v-if="!usernameEntered">
+            <div id="username" class="container">
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Enter your username" v-model="username" v-on:keyup.enter="usernameEntered=!usernameEntered">
+                    </div>
+                    <p class="help">Please enter to begin your session</p>
+                </div>
+            </div>
+        </section>
+        <section class="section" v-if="usernameEntered">
+            <div class="container">
+                <div class="box main-chat-window">
+                    <div class="notification" v-for="messageObject in messages">
+                        <p><strong>{{messageObject.username}}</strong></p>
+                        {{messageObject.message}}
+                    </div>
+
+                </div>
+            </div>
+            <div class="container">
+                <p>You are sending your message as, {{username}}</p>
+                <input class="input is-large" type="text" placeholder="Enter your message" v-model="newMessage"
+                    v-on:keyup.enter="enterNewMessage">
+                <a class="button is-small" v-on:click="showUsernameInput">Restart session</a>
+            </div>
+
+        </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
